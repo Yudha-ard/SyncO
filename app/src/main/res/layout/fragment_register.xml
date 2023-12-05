@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+app:layout_constraintTop_toTopOf="parent"
+app:layout_constraintBottom_toBottomOf="parent"
+tools:context=".ui.login.LoginFragment">
+
+<androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toTopOf="parent"
+    app:titleTextColor="@color/black"/>
+
+<ImageView
+    android:id="@+id/iv_wave"
+    android:layout_width="wrap_content"
+    android:layout_height="60dp"
+    android:layout_marginStart="32dp"
+    android:layout_marginTop="16dp"
+    android:src="@drawable/wave"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+<TextView
+    android:id="@+id/welcome"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="4dp"
+    android:fontFamily="sans-serif-light"
+    android:text="@string/welcome"
+    android:textColor="@color/blue"
+    android:textSize="18sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.064"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/iv_wave" />
+
+<TextView
+    android:id="@+id/create_account"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    android:fontFamily="sans-serif-light"
+    android:text="@string/create_account"
+    android:textColor="@color/blue"
+    android:textSize="14sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.142"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/welcome" />
+
+<!-- First Name -->
+<TextView
+    android:id="@+id/tv_fname"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:fontFamily="sans-serif-light"
+    android:text="@string/first_name"
+    android:textColor="@color/blue"
+    android:textSize="14sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.084"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/create_account" />
+
+<EditText
+    android:id="@+id/fname"
+    android:layout_width="0dp"
+    android:layout_height="40dp"
+    android:layout_marginStart="30dp"
+    android:layout_marginTop="7dp"
+    android:layout_marginEnd="30dp"
+    android:background="@drawable/custom_drawable_input"
+    android:imeActionLabel="@string/sign_in"
+    android:imeOptions="actionDone"
+    android:inputType="textPassword"
+    android:selectAllOnFocus="true"
+    android:textSize="14sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/tv_fname" />
+
+<!-- Last Name -->
+<TextView
+    android:id="@+id/tv_lname"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:fontFamily="sans-serif-light"
+    android:text="@string/lname"
+    android:textColor="@color/blue"
+    android:textSize="14sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.084"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/fname" />
+
+<EditText
+    android:id="@+id/lname"
+    android:layout_width="0dp"
+    android:layout_height="40dp"
+    android:layout_marginStart="30dp"
+    android:layout_marginTop="7dp"
+    android:layout_marginEnd="30dp"
+    android:background="@drawable/custom_drawable_input"
+    android:imeActionLabel="@string/sign_in"
+    android:imeOptions="actionDone"
+    android:inputType="textPassword"
+    android:selectAllOnFocus="true"
+    android:textSize="14sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/tv_lname" />
+
+<!-- Email -->
+<TextView
+    android:id="@+id/tv_email"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:fontFamily="sans-serif-light"
+    android:text="@string/email"
+    android:textColor="@color/blue"
+    android:textSize="14sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.084"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/lname" />
+
+<com.bangkit.synco.ui.customView.EditTextEmail
+    android:id="@+id/email"
+    android:layout_marginStart="30dp"
+    android:layout_marginEnd="30dp"
+    android:background="@drawable/custom_drawable_input"
+    android:layout_width="0dp"
+    android:layout_height="40dp"
+    android:layout_marginTop="7dp"
+    android:inputType="textEmailAddress"
+    android:selectAllOnFocus="true"
+    android:textSize="14sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="1.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/tv_email"/>
+
+
+<TextView
+    android:id="@+id/tv_password"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:fontFamily="sans-serif-light"
+    android:text="@string/password"
+    android:textColor="@color/blue"
+    android:textSize="14sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="@+id/email"
+    app:layout_constraintTop_toBottomOf="@+id/email" />
+
+<com.bangkit.synco.ui.customView.EditTextPassword
+    android:id="@+id/password"
+    android:layout_width="0dp"
+    android:layout_height="40dp"
+    android:layout_marginStart="30dp"
+    android:layout_marginTop="7dp"
+    android:layout_marginEnd="30dp"
+    android:background="@drawable/custom_drawable_input"
+    android:imeActionLabel="@string/sign_in"
+    android:imeOptions="actionDone"
+    android:inputType="textPassword"
+    android:selectAllOnFocus="true"
+    android:textSize="14sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/tv_password" />
+
+<androidx.appcompat.widget.AppCompatButton
+    android:id="@+id/btn_action"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="32dp"
+    android:layout_marginTop="16dp"
+    android:background="@drawable/button_login"
+    android:text="@string/login"
+    android:textAllCaps="false"
+    android:textColor="@color/white"
+    android:textSize="16sp"
+    android:transitionName="action"
+    app:backgroundTint="@null"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/password" />
+
+
+
+<LinearLayout
+    android:id="@+id/container_misc"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:gravity="center_horizontal"
+    android:transitionName="misc"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/btn_action">
+
+    <TextView
+        android:id="@+id/label_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/auth_question_register"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/btn_move"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/login"
+        android:textColor="@color/blue"
+        android:textStyle="bold" />
+</LinearLayout>
+
+<ProgressBar
+    android:id="@+id/loading"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginStart="32dp"
+    android:layout_marginTop="64dp"
+    android:layout_marginEnd="32dp"
+    android:layout_marginBottom="64dp"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="@+id/password"
+    app:layout_constraintStart_toStartOf="@+id/password"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
