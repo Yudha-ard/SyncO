@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bangkit.synco.MainActivity
 import com.bangkit.synco.databinding.FragmentLoginBinding
+import com.bangkit.synco.ui.home.HomeFragment
 
 class LoginFragment : Fragment() {
     private var loginFragmentBinding: FragmentLoginBinding? = null
@@ -33,8 +34,7 @@ class LoginFragment : Fragment() {
     private fun initView() {
         loginFragmentBinding?.apply {
             btnAction.setOnClickListener {
-                showLoading(true)
-                validateAndLogin()
+                (activity as MainActivity).moveToFragment(HomeFragment())
             }
             btnMove.setOnClickListener {
                 (activity as MainActivity).moveToFragment(RegisterFragment())

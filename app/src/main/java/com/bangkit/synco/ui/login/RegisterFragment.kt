@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bangkit.synco.ui.home.HomeFragment
 
 class RegisterFragment : Fragment() {
     private var registerFragmentBinding: FragmentRegisterBinding? = null
@@ -35,7 +36,7 @@ class RegisterFragment : Fragment() {
         registerFragmentBinding?.apply {
             btnAction.setOnClickListener {
                 showLoading(true)
-                validateAndRegister()
+                (activity as MainActivity).moveToFragment(HomeFragment())
             }
             btnMove.setOnClickListener {
                 (activity as MainActivity).moveToFragment(LoginFragment())

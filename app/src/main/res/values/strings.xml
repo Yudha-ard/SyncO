@@ -16,6 +16,7 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="reg_const">"I’m new, sign me up"</string>
 
     <string name="auth_question_register">Already have an account?</string>
     <string name="auth_question_login">don\'t have an account?</string>
@@ -26,6 +27,8 @@
     <string name="register">Register</string>
     <string name="first_name">First Name</string>
     <string name="lname">Last Name</string>
+
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqu</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

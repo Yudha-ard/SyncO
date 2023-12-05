@@ -7,7 +7,8 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 app:layout_constraintTop_toTopOf="parent"
 app:layout_constraintBottom_toBottomOf="parent"
-tools:context=".ui.login.LoginFragment">
+android:id="@+id/fragmentContainer"
+tools:context=".MainActivity">
 
 <androidx.appcompat.widget.Toolbar
     android:id="@+id/toolbar"
@@ -137,24 +138,24 @@ tools:context=".ui.login.LoginFragment">
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/lname" />
 
-<com.bangkit.synco.ui.customView.EditTextEmail
-    android:id="@+id/email"
-    android:layout_marginStart="30dp"
-    android:layout_marginEnd="30dp"
-    android:background="@drawable/custom_drawable_input"
-    android:layout_width="0dp"
-    android:layout_height="40dp"
-    android:layout_marginTop="7dp"
-    android:inputType="textEmailAddress"
-    android:selectAllOnFocus="true"
-    android:textSize="14sp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="1.0"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/tv_email"/>
 
+    <com.bangkit.synco.ui.customView.EditTextEmail
+        android:id="@+id/email"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/custom_drawable_input"
+        android:inputType="textEmailAddress"
+        android:selectAllOnFocus="true"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_email" />
 
-<TextView
+    <TextView
     android:id="@+id/tv_password"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

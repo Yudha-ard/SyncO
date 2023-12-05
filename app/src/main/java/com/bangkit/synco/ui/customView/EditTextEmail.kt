@@ -30,8 +30,7 @@ class EditTextEmail : AppCompatEditText {
         inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
         compoundDrawablePadding = 16
 
-        setHint(R.string.email)
-        setDrawable(emailButtonImage)
+        setDrawableWithStartMargin(emailButtonImage, startMargin = 16)
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
@@ -44,14 +43,27 @@ class EditTextEmail : AppCompatEditText {
             override fun afterTextChanged(s: Editable) {
             }
         })
+        val paddingStart = paddingLeft // Current padding
+        val additionalPadding = 40 // Additional padding
+        setPadding(paddingStart + additionalPadding, paddingTop, paddingRight, paddingBottom)
     }
-    private fun setDrawable(
+    private fun setDrawableWithStartMargin(
         start: Drawable? = null,
         top: Drawable? = null,
         end: Drawable? = null,
-        bottom: Drawable? = null
+        bottom: Drawable? = null,
+        startMargin: Int = 0
     ) {
-        setCompoundDrawablesWithIntrinsicBounds(start, top, end, bottom)
+        val startDrawable = start?.apply {
+            setBounds(startMargin, 0, intrinsicWidth + startMargin, intrinsicHeight)
+        }
+        val topDrawable = top?.apply { setBounds(0, 0, intrinsicWidth, intrinsicHeight) }
+        val endDrawable = end?.apply { setBounds(0, 0, intrinsicWidth, intrinsicHeight) }
+        val bottomDrawable = bottom?.apply { setBounds(0, 0, intrinsicWidth, intrinsicHeight) }
+
+        setCompoundDrawablesRelativeWithIntrinsicBounds(
+            startDrawable, topDrawable, endDrawable, bottomDrawable
+        )
     }
 
 }

@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"
-    tools:context=".ui.login.LoginFragment">
+    android:id="@+id/fragmentContainer"
+    tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

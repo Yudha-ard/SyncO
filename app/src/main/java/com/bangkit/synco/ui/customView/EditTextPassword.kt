@@ -32,7 +32,7 @@ class EditTextPassword : AppCompatEditText {
         init()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         transformationMethod = PasswordTransformationMethod.getInstance()
     }
@@ -43,9 +43,7 @@ class EditTextPassword : AppCompatEditText {
         inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
         compoundDrawablePadding = 16
 
-        setHint(R.string.password)
-        setDrawable(passwordIconDrawable)
-
+        setDrawableWithStartMargin(passwordIconDrawable, startMargin = 16)
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(p0: Editable?) {}
@@ -55,14 +53,28 @@ class EditTextPassword : AppCompatEditText {
                     error = context.getString(R.string.password_error_message)
             }
         })
+
+        val paddingStart = paddingLeft // Current padding
+        val additionalPadding = 40 // Additional padding
+        setPadding(paddingStart + additionalPadding, paddingTop, paddingRight, paddingBottom)
     }
 
-    private fun setDrawable(
+    private fun setDrawableWithStartMargin(
         start: Drawable? = null,
         top: Drawable? = null,
         end: Drawable? = null,
-        bottom: Drawable? = null
+        bottom: Drawable? = null,
+        startMargin: Int = 0
     ) {
-        setCompoundDrawablesWithIntrinsicBounds(start, top, end, bottom)
+        val startDrawable = start?.apply {
+            setBounds(startMargin, 0, intrinsicWidth + startMargin, intrinsicHeight)
+        }
+        val topDrawable = top?.apply { setBounds(0, 0, intrinsicWidth, intrinsicHeight) }
+        val endDrawable = end?.apply { setBounds(0, 0, intrinsicWidth, intrinsicHeight) }
+        val bottomDrawable = bottom?.apply { setBounds(0, 0, intrinsicWidth, intrinsicHeight) }
+
+        setCompoundDrawablesRelativeWithIntrinsicBounds(
+            startDrawable, topDrawable, endDrawable, bottomDrawable
+        )
     }
 }
