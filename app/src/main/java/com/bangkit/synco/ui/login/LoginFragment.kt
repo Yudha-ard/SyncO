@@ -34,10 +34,10 @@ class LoginFragment : Fragment() {
     private fun initView() {
         loginFragmentBinding?.apply {
             btnAction.setOnClickListener {
-                (activity as MainActivity).moveToFragment(HomeFragment())
+                (activity as MainActivity).moveToLoginFragment()
             }
             btnMove.setOnClickListener {
-                (activity as MainActivity).moveToFragment(RegisterFragment())
+                (activity as? MainActivity)?.moveToRegisterFragment()
             }
         }
     }

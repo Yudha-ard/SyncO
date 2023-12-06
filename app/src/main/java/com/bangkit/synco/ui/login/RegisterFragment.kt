@@ -39,7 +39,7 @@ class RegisterFragment : Fragment() {
                 (activity as MainActivity).moveToFragment(HomeFragment())
             }
             btnMove.setOnClickListener {
-                (activity as MainActivity).moveToFragment(LoginFragment())
+                (activity as MainActivity).moveToLoginFragment()
             }
         }
     }
