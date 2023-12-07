@@ -1,0 +1,13 @@
+steps:
+# Build the container image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/dicoding-403906/synco', '.']
+# Push the container image to Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/dicoding-403906/synco']
+# Deploy container image to Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: ['run', 'deploy', 'synco-dev', '--image', 'gcr.io/dicoding-403906/synco', '--region', 'asia-southeast2', '--platform', 'managed', '--allow-unauthenticated']
+images:
+- gcr.io/dicoding-403906/synco
