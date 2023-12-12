@@ -110,7 +110,8 @@ app.post("/auth", (req, res) => {
     if (bcrypt.compareSync(password, results[0].password)) {
       // Login berhasil
       const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: "1h" });
-      const userId = results[0].id_user;
+      const uid = results[0].id_user;
+      const userId = uid.toString();
       const name = results[0].first_name;
       res.json({
         error: false,
