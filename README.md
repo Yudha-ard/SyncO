@@ -15,5 +15,3 @@ SyncO aims to provide support in areas where access to traditional healthcare se
 
 ### Empowering Users
 Through intuitive features and easy-to-understand information, SyncO empowers users to comprehend their health concerns, fostering a proactive appro
-
-tes
