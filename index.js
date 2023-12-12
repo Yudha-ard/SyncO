@@ -40,11 +40,17 @@ app.post('/register', (req, res) => {
 
     console.log(`${email} ${password} ${firstName} ${lastName}`)
   
-    // // Check if all required fields are provided
-    // if (!email || !password || !firstName || !lastName) {
-    //   res.status(400).send('Harap lengkapi data yang kosong!');
-    //   return;
-    // }
+    // Check if all required fields are provided
+    if (!email || !password || !firstName || !lastName) {
+      res.status(400).json({ message: "Input tidak boleh kosong!" });
+      return;
+    }
+
+    // Check if all fields are of the correct type
+    if (typeof email !== 'string' || typeof password !== 'string' || typeof firstName !== 'string' || typeof lastName !== 'string') {
+      res.status(400).json({ message: "Semua input harus string!" });
+      return;
+    }
   
     // Hash password
     const hashedPassword = bcrypt.hashSync(password, 10);
@@ -57,7 +63,7 @@ app.post('/register', (req, res) => {
       }
   
       if (results.length > 0) {
-        res.status(400).send("Email sudah terdaftar!");
+        res.status(400).json({ message: "Email sudah terdaftar!" });
         return;
       }
   
