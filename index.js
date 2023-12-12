@@ -37,8 +37,6 @@ app.post('/register', (req, res) => {
     const password = req.body.password;
     const firstName = req.body.first_name;
     const lastName = req.body.last_name;
-
-    console.log(`${email} ${password} ${firstName} ${lastName}`)
   
     // Check if all required fields are provided
     if (!email || !password || !firstName || !lastName) {
@@ -89,7 +87,7 @@ app.post("/auth", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   if (!email || !password) {
-    res.status(400).send("email dan password harus diisi!");
+    res.status(400).json({ message: "email dan password harus diisi!" }); //send("email dan password harus diisi!");
     return;
   }
 
@@ -101,7 +99,10 @@ app.post("/auth", (req, res) => {
     }
 
     if (results.length === 0) {
-      res.status(401).send("email atau password salah!");
+      res.status(400).json({
+        error: true,
+        message: "Invalid email or password"
+      });
       return;
     }
 
@@ -109,10 +110,23 @@ app.post("/auth", (req, res) => {
     if (bcrypt.compareSync(password, results[0].password)) {
       // Login berhasil
       const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: "1h" });
-      res.json({ token });
-    } else {
+      const userId = results[0].id_user;
+      const name = results[0].first_name;
+      res.json({
+        error: false,
+        message: "success",
+        loginResult: {
+          userId: userId, // replace with the actual user ID from the database
+          name: name, // replace with the actual name from the database
+          token: token
+        }
+      });
+    } else { 
       // Login gagal
-      res.status(401).send("email atau password salah!");
+      res.status(400).json({
+        error: true,
+        message: "Invalid email or password"
+      });
     }
   });
 });
