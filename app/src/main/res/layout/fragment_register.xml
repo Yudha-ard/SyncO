@@ -15,7 +15,17 @@ tools:context=".MainActivity">
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:layout_constraintTop_toTopOf="parent"
-    app:titleTextColor="@color/black"/>
+    app:layout_constraintStart_toStartOf="parent"
+    app:titleTextColor="@color/black">
+
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_arrow_back_24"
+        android:background="@color/white"/>
+
+</androidx.appcompat.widget.Toolbar>
 
 <ImageView
     android:id="@+id/iv_wave"
@@ -79,10 +89,11 @@ tools:context=".MainActivity">
     android:layout_marginStart="30dp"
     android:layout_marginTop="7dp"
     android:layout_marginEnd="30dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
     android:background="@drawable/custom_drawable_input"
     android:imeActionLabel="@string/sign_in"
-    android:imeOptions="actionDone"
-    android:inputType="textPassword"
+    android:inputType="textPersonName"
     android:selectAllOnFocus="true"
     android:textSize="14sp"
     app:layout_constraintEnd_toEndOf="parent"
@@ -112,10 +123,11 @@ tools:context=".MainActivity">
     android:layout_marginStart="30dp"
     android:layout_marginTop="7dp"
     android:layout_marginEnd="30dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
     android:background="@drawable/custom_drawable_input"
     android:imeActionLabel="@string/sign_in"
-    android:imeOptions="actionDone"
-    android:inputType="textPassword"
+    android:inputType="textPersonName"
     android:selectAllOnFocus="true"
     android:textSize="14sp"
     app:layout_constraintEnd_toEndOf="parent"
@@ -194,7 +206,7 @@ tools:context=".MainActivity">
     android:layout_marginHorizontal="32dp"
     android:layout_marginTop="16dp"
     android:background="@drawable/button_login"
-    android:text="@string/login"
+    android:text="@string/register"
     android:textAllCaps="false"
     android:textColor="@color/white"
     android:textSize="16sp"

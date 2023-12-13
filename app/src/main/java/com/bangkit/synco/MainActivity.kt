@@ -4,6 +4,7 @@ import com.bangkit.synco.databinding.ActivityMainBinding
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.bangkit.synco.ui.article.ArticleFragment
@@ -16,27 +17,16 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    private  var binding: ActivityMainBinding? = null
     private lateinit var bottomNavigationView: BottomNavigationView
-    private lateinit var loginFragment: LoginFragment
-    private lateinit var registerFragment: RegisterFragment
-    private lateinit var homeFragment: HomeFragment
-    private lateinit var authFragment: AuthFragment
+    private lateinit var userPref: UserPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        // Initialize fragments
-        authFragment = AuthFragment()
-        loginFragment = LoginFragment()
-        registerFragment = RegisterFragment()
-        homeFragment = HomeFragment()
-
+        setContentView(binding?.root)
+        userPref = UserPreferences(this)
         supportActionBar?.hide()
-        val isLoggedIn = true
-        showFragment(authFragment)
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
         bottomNavigationView.setOnItemSelectedListener { item ->
@@ -56,14 +46,8 @@ class MainActivity : AppCompatActivity() {
                 else -> return@setOnItemSelectedListener false
             }
         }
-    }
 
-    private fun showFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, fragment)
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            .commit()
-        updateNavigationBarVisibility(false)
+        checkSession()
     }
 
     fun moveToFragment(fragment: Fragment) {
@@ -71,26 +55,40 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.fragmentContainer, fragment)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .commitNow()
-        updateNavigationBarVisibility(true)
+        updateNavigationBarVisibility(userPref.getLoginData().isLogin)
     }
 
-    private fun updateNavigationBarVisibility(isLoggedIn: Boolean) {
-        val bottomAppBar = findViewById<BottomAppBar>(R.id.bottomAppBar)
+    private fun checkSession() {
+        val isLoggedIn = userPref.getLoginData().isLogin
         if (isLoggedIn) {
-            bottomAppBar.visibility = View.VISIBLE
+            moveToFragment(HomeFragment())
         } else {
-            bottomAppBar.visibility = View.GONE
+            moveToFragment(AuthFragment())
         }
+        updateNavigationBarVisibility(isLoggedIn)
     }
 
-    fun moveToLoginFragment() {
+    fun doLogout() {
+        userPref.logout()
         moveToFragment(LoginFragment())
         updateNavigationBarVisibility(false)
     }
 
-    fun moveToRegisterFragment() {
-        moveToFragment(RegisterFragment())
-        updateNavigationBarVisibility(false)
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
+    }
+
+    private fun updateNavigationBarVisibility(isLoggedIn: Boolean) {
+        val bottomAppBar = findViewById<BottomAppBar>(R.id.bottomAppBar)
+        Log.d("MainActivity", "isLoggedIn: $isLoggedIn")
+        if (isLoggedIn) {
+            bottomAppBar.visibility = View.VISIBLE
+
+        } else {
+            bottomAppBar.visibility = View.GONE
+
+        }
     }
 }
 

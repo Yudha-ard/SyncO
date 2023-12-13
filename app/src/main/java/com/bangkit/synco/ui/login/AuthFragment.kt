@@ -23,21 +23,17 @@ class AuthFragment : Fragment() {
         return binding?.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.cardView?.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue))
         binding?.btnLogin?.setOnClickListener {
-            (activity as? MainActivity)?.moveToLoginFragment()
+            (activity as? MainActivity)?.moveToFragment(LoginFragment())
         }
-
         binding?.btnRegister?.setOnClickListener {
-            (activity as? MainActivity)?.moveToRegisterFragment()
+            (activity as? MainActivity)?.moveToFragment(RegisterFragment())
         }
-
         (activity as MainActivity).supportActionBar?.hide()
-
     }
-
-
 }
 
