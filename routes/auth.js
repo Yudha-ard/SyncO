@@ -79,7 +79,7 @@ router.get("/", (req, res) => {
 
 router.post("/login", (req, res) => {
   // Validasi input
-  const email = req.body.email;
+  const email = req.body.email; 
   const password = req.body.password;
   if (!email || !password) {
     res.status(400).json({ message: "email dan password harus diisi!" }); //send("email dan password harus diisi!");
