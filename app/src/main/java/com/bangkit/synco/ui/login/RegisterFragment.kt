@@ -6,11 +6,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.bangkit.synco.UserPreferences
+import com.bangkit.synco.data.model.RegistrationRequest
 import com.bangkit.synco.ui.home.HomeFragment
+import com.shashank.sony.fancytoastlib.FancyToast
 
 class RegisterFragment : Fragment() {
     private var registerFragmentBinding: FragmentRegisterBinding? = null
+    private lateinit var authVM: AuthViewModel
+    private lateinit var userPref: UserPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -18,6 +25,8 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         registerFragmentBinding = FragmentRegisterBinding.inflate(inflater, container, false)
+        initVM()
+        userPref = UserPreferences(requireContext())
         return registerFragmentBinding?.root
     }
 
@@ -35,11 +44,15 @@ class RegisterFragment : Fragment() {
     private fun initView() {
         registerFragmentBinding?.apply {
             btnAction.setOnClickListener {
+                showMessage("Registering")
                 showLoading(true)
-                (activity as MainActivity).moveToFragment(HomeFragment())
+                validateAndRegister()
             }
             btnMove.setOnClickListener {
-                (activity as MainActivity).moveToLoginFragment()
+                (activity as MainActivity).moveToFragment(LoginFragment())
+            }
+            btnBack.setOnClickListener {
+                (activity as MainActivity).moveToFragment(AuthFragment())
             }
         }
     }
@@ -50,18 +63,25 @@ class RegisterFragment : Fragment() {
         val email = registerFragmentBinding?.email?.text.toString().trim()
         val password = registerFragmentBinding?.password?.text.toString().trim()
 
+        val registrationRequest = RegistrationRequest(fname, lname, email, password)
+        authVM.doRegister(registrationRequest)
+    }
+
+
+    private fun initVM() {
+        authVM = ViewModelProvider(requireActivity())[AuthViewModel::class.java]
+
+        authVM.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            isLoading?.let { showLoading(it) }
+        }
+
+        authVM.message.observe(viewLifecycleOwner) { message ->
+            message?.let { showMessage(it) }
+        }
     }
 
     private fun validateAndRegister() {
         when {
-            registerFragmentBinding?.fname?.text.isNullOrBlank() -> {
-                registerFragmentBinding?.fname?.error = "first name is required"
-                return
-            }
-            registerFragmentBinding?.lname?.text.isNullOrBlank() -> {
-                registerFragmentBinding?.lname?.error = "last name is required"
-                return
-            }
             registerFragmentBinding?.email?.text.isNullOrBlank() -> {
                 registerFragmentBinding?.email?.error = "Username is required"
                 return
@@ -71,10 +91,15 @@ class RegisterFragment : Fragment() {
                 return
             }
         }
+        doRegister()
     }
 
     private fun showLoading(isLoading: Boolean) {
         registerFragmentBinding?.loading?.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun showMessage(message: String) {
+        FancyToast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
 }

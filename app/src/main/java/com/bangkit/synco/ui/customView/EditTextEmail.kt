@@ -29,7 +29,7 @@ class EditTextEmail : AppCompatEditText {
         emailButtonImage = ContextCompat.getDrawable(context, R.drawable.baseline_email_24) as Drawable
         inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
         compoundDrawablePadding = 16
-
+        setDrawableWithStartMargin(emailButtonImage, startMargin = 16)
         setDrawableWithStartMargin(emailButtonImage, startMargin = 16)
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {

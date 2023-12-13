@@ -15,7 +15,7 @@ android {
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
-
+        buildConfigField("String", "BASE_URL", "\"https://synco-dev-tbfuyp4usa-et.a.run.app\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -25,8 +25,7 @@ android {
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
-            )
-        }
+            )}
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -63,6 +62,15 @@ dependencies {
     implementation ("androidx.paging:paging-runtime-ktx:3.1.1")
 
     implementation ("androidx.core:core-splashscreen:1.0.0")
+    implementation ("com.google.code.gson:gson:2.8.8")
 
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
+    implementation ("com.squareup.okhttp3:okhttp:4.9.1")
 
+    implementation ("io.github.shashank02051997:FancyToast:2.0.2")
+    implementation ("org.mindrot:jbcrypt:0.4")
+    implementation ("org.springframework.security:spring-security-crypto:5.7.2")
+    implementation ("commons-logging:commons-logging-api:1.1")
 }
