@@ -3,18 +3,17 @@ package com.bangkit.synco
 import com.bangkit.synco.databinding.ActivityMainBinding
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.bangkit.synco.ui.article.ArticleFragment
 import com.bangkit.synco.ui.home.HomeFragment
 import com.bangkit.synco.ui.login.AuthFragment
 import com.bangkit.synco.ui.login.LoginFragment
 import com.bangkit.synco.ui.login.RegisterFragment
+import com.bangkit.synco.ui.profile.ProfileFragment
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -44,6 +43,14 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.navigation_home -> {
                     moveToFragment(HomeFragment())
+                    return@setOnItemSelectedListener true
+                }
+                R.id.navigation_profile -> {
+                    moveToFragment(ProfileFragment())
+                    return@setOnItemSelectedListener true
+                }
+                R.id.navigation_article -> {
+                    moveToFragment(ArticleFragment())
                     return@setOnItemSelectedListener true
                 }
                 else -> return@setOnItemSelectedListener false
