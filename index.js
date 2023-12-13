@@ -112,13 +112,15 @@ app.post("/auth", (req, res) => {
       const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: "1h" });
       const uid = results[0].id_user;
       const userId = uid.toString();
-      const name = results[0].first_name;
+      const fname = results[0].first_name;
+      const lname = results[0].last_name;
       res.json({
         error: false,
         message: "success",
         loginResult: {
           userId: userId, // replace with the actual user ID from the database
-          name: name, // replace with the actual name from the database
+          firstName: fname, // replace with the actual name from the database
+          lastName: lname, // replace with the actual name from the database
           token: token
         }
       });
@@ -168,7 +170,7 @@ app.use((req, res, next) => {
     // Kirim response sukses
     res.json({ message: "Logout berhasil" });
   });
-  
+
 
 // Jalankan server
 const port = process.env.PORT || 3000;
