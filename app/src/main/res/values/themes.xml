@@ -8,4 +8,9 @@
         <item name="windowSplashScreenBackground">@color/white</item>
     </style>
     <style name="Theme.Synco" parent="Base.Theme.Synco" />
+
+    <style name="roundedCornersImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
 </resources>
