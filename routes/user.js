@@ -5,8 +5,6 @@ const dotenv = require("dotenv");
 const mysql = require("mysql");
 const authMiddleware = require('../middlewares/authMiddleware');
 
-
-
 // Konfigurasi dotenv
 dotenv.config();
 
@@ -66,6 +64,32 @@ router.put("/:id", authMiddleware, (req, res) => {
 
             // Kirim response
             res.json({ message: 'Data berhasil diupdate' });
+        }
+    );
+});
+
+// mendapatakan umur user berdasarkan id
+router.get("/age/:id", authMiddleware, (req, res) => {
+    // Query database
+    db.query(
+        "SELECT dateofbirth FROM user WHERE id_user = ?",
+        [req.params.id],
+        (err, results) => {
+            if (err) {
+                res.status(500).send(err);
+                return;
+            }
+
+            const birthDate = new Date(results[0].dateofbirth);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const month = today.getMonth() - birthDate.getMonth();
+
+            if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            res.json({ age: age });
         }
     );
 });
