@@ -6,6 +6,7 @@ const app = express();
 //IMPORT ROUTER
 const authRoutes = require('./routes/auth');
 const getAllUsersRoute = require('./routes/user');
+const artikelRoutes = require('./routes/artikel');
 
 // Konfigurasi dotenv
 dotenv.config();
@@ -15,6 +16,7 @@ app.use(express.json());
 
 app.use('/auth', authRoutes);
 app.use('/api/users', getAllUsersRoute);
+app.use('/artikel', artikelRoutes);
 
 // Jalankan server
 const port = process.env.PORT || 3000;
