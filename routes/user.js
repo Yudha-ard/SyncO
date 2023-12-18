@@ -94,4 +94,46 @@ router.get("/age/:id", authMiddleware, (req, res) => {
     );
 });
 
+// Route untuk mengambil berat badan user berdasarkan id
+router.get("/weight/:id", authMiddleware, (req, res) => {
+    // Query database
+    db.query(
+        "SELECT weight FROM user WHERE id_user = ?",
+        [req.params.id],
+        (err, results) => {
+            if (err) {
+                res.status(500).send(err);
+                return;
+            }
+
+            if (results.length > 0) {
+                res.json({ weight: results[0].weight });
+            } else {
+                res.status(404).json({ message: 'No user found with the provided ID.' });
+            }
+        }
+    );
+});
+
+// Route untuk mengambil tinggi badan user berdasarkan id
+router.get("/height/:id", authMiddleware, (req, res) => {
+    // Query database
+    db.query(
+        "SELECT height FROM user WHERE id_user = ?",
+        [req.params.id],
+        (err, results) => {
+            if (err) {
+                res.status(500).send(err);
+                return;
+            }
+
+            if (results.length > 0) {
+                res.json({ height: results[0].height });
+            } else {
+                res.status(404).json({ message: 'No user found with the provided ID.' });
+            }
+        }
+    );
+});
+
 module.exports = router;
