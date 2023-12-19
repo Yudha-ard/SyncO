@@ -15,7 +15,7 @@ const db = mysql.createConnection({
   database: process.env.DB_DATABASE,
 });
 
-router.post('/predict', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const { symptoms } = req.body;
 
@@ -56,7 +56,8 @@ router.post('/predict', async (req, res) => {
         };
         
         res.status(200).json(responseObject);
-        const insertHistoryQuery = `INSERT INTO history (id_user, id_penyakit) VALUES (1, ${id_penyakit})`;
+        const currentDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        const insertHistoryQuery = `INSERT INTO history (id_user, id_penyakit, tanggal) VALUES (1, ${id_penyakit}, '${currentDate}')`;
         db.query(insertHistoryQuery, (insertError, insertResults) => {
           if (insertError) {
             console.error('Error inserting data into history table:', insertError);

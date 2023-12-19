@@ -40,6 +40,30 @@ router.get("/:id", authMiddleware, (req, res) => {
     );
 });
 
+// Route untuk mengambil email dan username berdasarkan id
+router.get("/data/:id", authMiddleware, (req, res) => {
+    // Query database
+    db.query(
+        "SELECT email, CONCAT(first_name, ' ', last_name) AS name FROM user WHERE id_user = ?",
+        [req.params.id],
+        (err, results) => {
+            if (err) {
+                res.status(500).send(err);
+                return;
+            }
+
+            if (results.length > 0) {
+                res.json({ 
+                            name: results[0].name,
+                            email: results[0].email
+                        });
+            } else {
+                res.status(404).json({ message: 'No user found with the provided ID.' });
+            }
+        }
+    );
+});
+
 // Route untuk mengedit data user berdasarkan id
 router.put("/:id", authMiddleware, (req, res) => {
     const dateofbirth = req.body.dateofbirth;
