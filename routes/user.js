@@ -16,11 +16,12 @@ const db = mysql.createConnection({
   database: process.env.DB_DATABASE,
 });
 
+// Route untuk mengambil data user berdasarkan id
 router.get('/me', authMiddleware, (req, res) => {
     const userEmail = req.user.email;
 
     db.query(
-        'SELECT id_user, CONCAT(first_name," ",last_name) AS fullname, email, dateofbirth, height, weight FROM user WHERE email = ?',
+        'SELECT first_name, last_name, email, dateofbirth, height, weight FROM user WHERE email = ?',
         [userEmail],
         (err, results) => {
             if (err) {
@@ -31,30 +32,9 @@ router.get('/me', authMiddleware, (req, res) => {
                 return res.status(404).json({ message: 'User not found' });
             }
 
-            res.json({ user: results[0] });
-        }
-    );
-});
-
-
-// Route untuk mengambil data user berdasarkan id
-router.get("/:id", authMiddleware, (req, res) => {  
-    // Query database
-    db.query(
-        "SELECT id_user, first_name, last_name, email, dateofbirth, height, weight FROM user WHERE id_user = ?",
-        [req.params.id],
-        (err, results) => {
-            if (err) {
-                res.status(500).send(err);
-                return;
-            }
-  
             const date = results[0].dateofbirth;
             const formattedDate = [date.getFullYear(), ('0' + (date.getMonth() + 1)).slice(-2), ('0' + date.getDate()).slice(-2)].join('-');
             res.json({ user: { ...results[0], dateofbirth: formattedDate } });
-
-            // Kirim response
-            // res.json({ user: results[0] });
         }
     );
 });
@@ -85,7 +65,7 @@ router.get("/data/:id", authMiddleware, (req, res) => {
 });
 
 // Route untuk mengedit data user berdasarkan id
-router.put("/:id", authMiddleware, (req, res) => {
+router.put("/update/:id", authMiddleware, (req, res) => {
     const dateofbirth = req.body.dateofbirth;
     const height = req.body.height;
     const weight = req.body.weight;
