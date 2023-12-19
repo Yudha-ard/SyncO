@@ -12,6 +12,7 @@ router.get('/', async (req, res) => {
           link: `https://www.orami.co.id/magazine/${encodeURIComponent(post.slug)}`,
           title: post.title,
           slug: post.slug,
+          thumbnail: post.featured_thumbnail ? post.featured_thumbnail.file : null,
           intro: post.intro,
           date: post.date
         }));

@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const mysql = require("mysql");
 const dotenv = require("dotenv");
+const authMiddleware = require('../middlewares/authMiddleware');
 
 // Konfigurasi dotenv
 dotenv.config();
@@ -15,7 +16,7 @@ const db = mysql.createConnection({
   database: process.env.DB_DATABASE,
 });
 
-router.post('/', async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => {
   try {
     const { symptoms } = req.body;
 
@@ -35,7 +36,7 @@ router.post('/', async (req, res) => {
       
       const query = `SELECT * FROM penyakit WHERE nama_penyakit = '${predictionString}'`;
 
-      db.query(query, (error, results) => {
+      db.query(query, async (error, results) => {
         if (error) {
           console.error('Error fetching data from database:', error);
           return res.status(500).json({ message: 'Error fetching data from database.' });
@@ -48,24 +49,41 @@ router.post('/', async (req, res) => {
         const { predict, id_penyakit, nama_penyakit, deskripsi, pencegahan } = results[0];
         console.log(query);
 
-        const responseObject = {
-          predict,
-          nama_penyakit,
-          deskripsi,
-          pencegahan
-        };
-        
-        res.status(200).json(responseObject);
-        const currentDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
-        const insertHistoryQuery = `INSERT INTO history (id_user, id_penyakit, tanggal) VALUES (1, ${id_penyakit}, '${currentDate}')`;
-        db.query(insertHistoryQuery, (insertError, insertResults) => {
-          if (insertError) {
-            console.error('Error inserting data into history table:', insertError);
-          } else {
-            console.log('Data inserted into history table successfully:', insertResults);
-          }
-        });
+        const userEmail = req.user.email;
+        db.query(
+          'SELECT id_user FROM user WHERE email = ?',
+          [userEmail],
+          (err, userResults) => {
+              if (err) {
+                  return res.status(500).json({ message: 'Internal server error' });
+              }
+  
+              if (userResults.length === 0) {
+                  return res.status(404).json({ message: 'User not found' });
+              }
+  
+              const userId = userResults[0].id_user;
+              const currentDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
+              const insertHistoryQuery = `INSERT INTO history (id_user, id_penyakit, tanggal) VALUES (${userId}, ${id_penyakit}, '${currentDate}')`;
 
+              db.query(insertHistoryQuery, (insertError, insertResults) => {
+                if (insertError) {
+                  console.error('Error inserting data into history table:', insertError);
+                  return res.status(500).json({ message: 'Error inserting data into history table' });
+                }
+
+                console.log('Data inserted into history table successfully:', insertResults);
+                res.status(200).json({ 
+                  message: 'Data inserted into history table successfully',
+                  predict,
+                  nama_penyakit,
+                  deskripsi,
+                  pencegahan
+                });
+              });
+  
+          }
+        );
       });
 
     } else {

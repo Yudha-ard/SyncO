@@ -16,7 +16,26 @@ const db = mysql.createConnection({
   database: process.env.DB_DATABASE,
 });
 
-// ...
+router.get('/me', authMiddleware, (req, res) => {
+    const userEmail = req.user.email;
+
+    db.query(
+        'SELECT id_user, CONCAT(first_name," ",last_name) AS fullname, email, dateofbirth, height, weight FROM user WHERE email = ?',
+        [userEmail],
+        (err, results) => {
+            if (err) {
+                return res.status(500).json({ message: 'Internal server error' });
+            }
+
+            if (results.length === 0) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+
+            res.json({ user: results[0] });
+        }
+    );
+});
+
 
 // Route untuk mengambil data user berdasarkan id
 router.get("/:id", authMiddleware, (req, res) => {  
@@ -44,7 +63,7 @@ router.get("/:id", authMiddleware, (req, res) => {
 router.get("/data/:id", authMiddleware, (req, res) => {
     // Query database
     db.query(
-        "SELECT email, CONCAT(first_name, ' ', last_name) AS name FROM user WHERE id_user = ?",
+        "SELECT id_user, email, CONCAT(first_name, ' ', last_name) AS name FROM user WHERE id_user = ?",
         [req.params.id],
         (err, results) => {
             if (err) {
@@ -54,6 +73,7 @@ router.get("/data/:id", authMiddleware, (req, res) => {
 
             if (results.length > 0) {
                 res.json({ 
+                            id: results[0].id_user,
                             name: results[0].name,
                             email: results[0].email
                         });
