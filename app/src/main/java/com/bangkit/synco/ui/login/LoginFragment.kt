@@ -1,6 +1,5 @@
 package com.bangkit.synco.ui.login
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.bangkit.synco.MainActivity
 import com.bangkit.synco.UserPreferences
 import com.bangkit.synco.data.model.LoginRequest
-import com.bangkit.synco.data.model.RegistrationRequest
 import com.bangkit.synco.data.model.User
 import com.bangkit.synco.databinding.FragmentLoginBinding
 import com.bangkit.synco.ui.home.HomeFragment
@@ -53,6 +51,7 @@ class LoginFragment : Fragment() {
                 (activity as MainActivity).moveToFragment(AuthFragment())
             }
         }
+
     }
     private fun doLogin() {
         val email = loginFragmentBinding?.email?.text.toString().trim()
@@ -77,18 +76,11 @@ class LoginFragment : Fragment() {
 
                 Log.d("LoginFragment", "doLogin: $currentUser")
                 userPref.setUserLogin(currentUser)
-
-                AlertDialog.Builder(requireContext()).apply {
-                    setTitle("Login Successfully")
-                    setPositiveButton("Ok") { _, _ ->
-                        (activity as MainActivity).moveToFragment(HomeFragment())
-                    }
-                    create()
-                    show()
-                }
+                (activity as MainActivity).moveToFragment(HomeFragment())
 
             }
         }
+
     }
 
     private fun initVM() {

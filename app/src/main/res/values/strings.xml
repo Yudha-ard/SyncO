@@ -27,9 +27,14 @@
     <string name="register">Register</string>
     <string name="first_name">First Name</string>
     <string name="lname">Last Name</string>
+    <string name="warning">If you’re experiencing serious symptoms, Please contact emergency services</string>
 
-    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqu</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="info_diagnose">Cervical spondylosis is a general term for age-related wear and tear affecting the spinal disks in your neck. As the disks dehydrate and shrink, signs of osteoarthritis develop, including bony projections along the edges of bones (bone spurs).</string>
+
+    <string name="lorem">Get insights into your well-being and track your progress towards a healthier life.</string>
+    <string name="home">
+        How are you feeling today?  \nLet’s start a health \nassesment
+    </string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="menu_home">Home</string>

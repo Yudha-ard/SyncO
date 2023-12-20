@@ -37,8 +37,29 @@ class UserPreferences(context: Context) {
         _usrSessionFlow.value = user
     }
 
+    fun updateUsername(firstName: String, lastName: String) {
+        val currentUser = getLoginData()
+        val updatedUser = currentUser.copy(firstName = firstName, lastName = lastName)
+
+        with(pref.edit()) {
+            putString(FIRST_NAME_KEY, updatedUser.firstName)
+            putString(LAST_NAME_KEY, updatedUser.lastName)
+            apply()
+        }
+        _usrSessionFlow.value = updatedUser
+    }
+
+
+
     fun getUserEmail(): String {
         return pref.getString(USER_EMAIL_KEY, "") ?: ""
+    }
+
+    fun getFirstName(): String {
+        return pref.getString(FIRST_NAME_KEY, "") ?: ""
+    }
+    fun getLastName(): String {
+        return pref.getString(LAST_NAME_KEY, "") ?: ""
     }
 
     fun logout() {

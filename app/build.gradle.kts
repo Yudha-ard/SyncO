@@ -15,7 +15,7 @@ android {
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
-        buildConfigField("String", "BASE_URL", "\"https://synco-dev-tbfuyp4usa-et.a.run.app\"")
+        buildConfigField("String", "BASE_URL", "\"https://synco-dev-tbfuyp4usa-et.a.run.app/\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

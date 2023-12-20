@@ -3,6 +3,7 @@ package com.bangkit.synco.ui.login
 import com.bangkit.synco.MainActivity
 import com.bangkit.synco.databinding.FragmentRegisterBinding
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,6 +65,7 @@ class RegisterFragment : Fragment() {
         val password = registerFragmentBinding?.password?.text.toString().trim()
 
         val registrationRequest = RegistrationRequest(fname, lname, email, password)
+        Log.d("doRegiterfragment","$fname")
         authVM.doRegister(registrationRequest)
     }
 
@@ -75,6 +77,13 @@ class RegisterFragment : Fragment() {
             isLoading?.let { showLoading(it) }
         }
 
+        authVM.registrationSuccess.observe(viewLifecycleOwner) { isSuccess ->
+            if (isSuccess) {
+                (activity as MainActivity).moveToFragment(AuthFragment())
+            }else{
+                (activity as MainActivity).moveToFragment(AuthFragment())
+            }
+        }
         authVM.message.observe(viewLifecycleOwner) { message ->
             message?.let { showMessage(it) }
         }

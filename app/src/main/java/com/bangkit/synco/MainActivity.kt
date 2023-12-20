@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 
     fun doLogout() {
         userPref.logout()
-        moveToFragment(LoginFragment())
+        moveToFragment(AuthFragment())
         updateNavigationBarVisibility(false)
     }
 
@@ -79,16 +79,15 @@ class MainActivity : AppCompatActivity() {
         binding = null
     }
 
-    private fun updateNavigationBarVisibility(isLoggedIn: Boolean) {
-        val bottomAppBar = findViewById<BottomAppBar>(R.id.bottomAppBar)
+    fun updateNavigationBarVisibility(isLoggedIn: Boolean) {
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         Log.d("MainActivity", "isLoggedIn: $isLoggedIn")
         if (isLoggedIn) {
-            bottomAppBar.visibility = View.VISIBLE
-
+            bottomNavigationView.visibility = View.VISIBLE
         } else {
-            bottomAppBar.visibility = View.GONE
-
+            bottomNavigationView.visibility = View.GONE
         }
     }
+
 }
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/item_pencegahan.xml -->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- Circular outline -->
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="start"
+        android:src="@drawable/circle_outline"
+        android:contentDescription="@null" />
+
+    <!-- TextView for the text -->
+    <TextView
+        android:id="@+id/tv_Pencegahan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="start"
+        android:text="hola halo"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+</FrameLayout>

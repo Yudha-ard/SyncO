@@ -27,25 +27,20 @@ class AuthViewModel : ViewModel(){
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _registrationSuccess = MutableLiveData<Boolean>()
+    val registrationSuccess: LiveData<Boolean> = _registrationSuccess
+
     fun doLogin(loginRequest: LoginRequest) {
-        _isLoading.value = false
+        _isLoading.value = true
         ApiConfig.getApiService().doLogin(loginRequest)
             .enqueue(object : Callback<Login> {
                 override fun onResponse(call: Call<Login>, response: Response<Login>) {
                     Log.d("LoginFragment", "ini hasil ${"Response Body: ${Gson().toJson(response.body())}"}")
                     if (response.isSuccessful && response.body() != null) {
-                        _isLoading.value = true
+                        _isLoading.value = false
                         _usrLogin.value = response.body()
-                        _isLoading.value = true
-                        _usrLogin.value = response.body()
-                        _message.value = "Login successful for ${response.body()?.loginResult?.firstName}"
-
-                        // Log the actual response body
+                        _registrationSuccess.value = true
                         Log.d("LoginFragment", "Response Body: ${Gson().toJson(response.body())}")
-
-                        // Log specific fields for debugging
-                        Log.d("LoginFragment", "Response firstName: ${response.body()?.loginResult?.firstName}")
-                        Log.d("LoginFragment", "Response lastName: ${response.body()?.loginResult?.lastName}")
                     } else {
                         _message.value = "Login failed: ${response.errorBody()?.string()}"
                     }
@@ -59,7 +54,7 @@ class AuthViewModel : ViewModel(){
     }
 
     fun doRegister(registrationRequest: RegistrationRequest) {
-        _isLoading.value = false
+        _isLoading.value = true
         ApiConfig.getApiService().doRegister(registrationRequest)
             .enqueue(object : Callback<Register> {
                 override fun onResponse(
@@ -67,13 +62,16 @@ class AuthViewModel : ViewModel(){
                     response: Response<Register>
                 ) {
                     if (response.isSuccessful) {
-                        _isLoading.value = true
+                        _isLoading.value = false
                         _message.value = "Registration successful. Name: ${registrationRequest.firstName}, Email: ${registrationRequest.email}"
+                        _registrationSuccess.value = true
                     } else {
+                        _registrationSuccess.value = false
                         try {
                             val errorBody = response.errorBody()?.string()
                             val errorMessage = Gson().fromJson(errorBody, ErrorResponse::class.java)
                             _message.value = errorMessage.message
+
                         } catch (e: Exception) {
                             _message.value = "Registration failed: ${response.message()}"
                         }
