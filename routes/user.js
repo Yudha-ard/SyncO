@@ -16,7 +16,6 @@ const db = mysql.createConnection({
   database: process.env.DB_DATABASE,
 });
 
-// Route untuk mengambil data user berdasarkan id
 router.get('/me', authMiddleware, (req, res) => {
     const userEmail = req.user.email;
 
@@ -32,9 +31,21 @@ router.get('/me', authMiddleware, (req, res) => {
                 return res.status(404).json({ message: 'User not found' });
             }
 
-            const date = results[0].dateofbirth;
-            const formattedDate = [date.getFullYear(), ('0' + (date.getMonth() + 1)).slice(-2), ('0' + date.getDate()).slice(-2)].join('-');
-            res.json({ user: { ...results[0], dateofbirth: formattedDate } });
+            const dateOfBirth = results[0].dateofbirth;
+            const birthDate = new Date(dateOfBirth);
+            const today = new Date();
+
+            // Calculate age
+            const age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            // Add the calculated age to the user object
+            const formattedUser = { ...results[0], dateofbirth: dateOfBirth, age };
+            res.json({ user: formattedUser });
         }
     );
 });
@@ -60,34 +71,6 @@ router.get("/data/:id", authMiddleware, (req, res) => {
             } else {
                 res.status(404).json({ message: 'No user found with the provided ID.' });
             }
-        }
-    );
-});
-
-// Route untuk mengedit data user berdasarkan id
-router.put("/update/:id", authMiddleware, (req, res) => {
-    const dateofbirth = req.body.dateofbirth;
-    const height = req.body.height;
-    const weight = req.body.weight;
-    
-    // Pastikan dateofbirth, height, dan weight ada dalam request body
-    if (!dateofbirth || !height || !weight) {
-        res.status(400).json({ message: 'Mohon isi semua field yang diperlukan' });
-        return;
-    }
-
-    // Query database untuk mengupdate data
-    db.query(
-        "UPDATE user SET dateofbirth = ?, height = ?, weight = ? WHERE id_user = ?",
-        [dateofbirth, height, weight, req.params.id],
-        (err, results) => {
-            if (err) {
-                res.status(500).send(err);
-                return;
-            }
-
-            // Kirim response
-            res.json({ message: 'Data berhasil diupdate' });
         }
     );
 });
@@ -157,6 +140,36 @@ router.get("/height/:id", authMiddleware, (req, res) => {
                 res.status(404).json({ message: 'No user found with the provided ID.' });
             }
         }
+    );
+});
+
+// Route to update user data for the authenticated user
+router.put("/update/me", authMiddleware, (req, res) => {
+    const userEmail = req.user.email; // Extract user email from the authenticated user
+    const dateofbirth = req.body.dateofbirth;
+    const height = req.body.height;
+    const weight = req.body.weight;
+  
+    // Ensure dateofbirth, height, and weight are present in the request body
+    if (!dateofbirth || !height || !weight) {
+      res.status(400).json({ message: 'Mohon isi semua field yang diperlukan' });
+      return;
+    }
+  
+    // Query database to update user data for the authenticated user
+    db.query(
+      "UPDATE user SET dateofbirth = ?, height = ?, weight = ? WHERE email = ?",
+      [dateofbirth, height, weight, userEmail],
+      (err, results) => {
+        if (err) {
+          console.error(err); // Log the error to the console
+          res.status(500).send(err);
+          return;
+        }
+  
+        // Send response
+        res.json({ message: 'Data berhasil diupdate' });
+      }
     );
 });
 
