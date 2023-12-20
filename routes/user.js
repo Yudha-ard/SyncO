@@ -160,4 +160,34 @@ router.get("/height/:id", authMiddleware, (req, res) => {
     );
 });
 
+router.get("/history/me", authMiddleware, (req, res) => {
+    if (!req.user || !req.user.email) {
+        return res.status(400).json({ message: 'Invalid request. User or user email is missing.' });
+    }
+
+    const userEmail = req.user.email;
+  
+    // Query database to get assessment history with additional information
+    const query = `
+      SELECT
+        DATE_FORMAT(H.tanggal, '%Y-%m-%d') AS history_tanggal,
+        P.nama_penyakit AS nama_penyakit
+      FROM
+        history H
+        JOIN user U ON H.id_user = U.id_user
+        JOIN penyakit P ON H.id_penyakit = P.id_penyakit
+      WHERE
+        U.email = ?
+    `;
+  
+    db.query(query, [userEmail], (err, results) => {
+      if (err) {
+        console.error('Error fetching assessment history:', err);
+        return res.status(500).json({ message: 'Error fetching assessment history.' });
+      }
+  
+      res.json({ history: results });
+    });
+});
+
 module.exports = router;
