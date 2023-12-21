@@ -134,13 +134,9 @@ class AssessmentActivity : AppCompatActivity() {
                 }
             })
     }
-
     private fun showMessage(message: String) {
         FancyToast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
-
-
-
 }
 
 

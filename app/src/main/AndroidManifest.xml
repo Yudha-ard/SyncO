@@ -38,12 +38,18 @@
             android:name=".ui.home.HomeFragment"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".ui.webview.WebViewActivity"
+            android:exported="true">
+        </activity>
 
         <activity
             android:name=".ui.splashscreen.SplashScreenActivity"
             android:theme="@style/Theme.SyncoSplashScreen"
             android:exported="true">
         </activity>
+
+
             <meta-data
                 android:name="com.google.android.gms.ads.APPLICATION_ID"
                 android:value="ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy"/>

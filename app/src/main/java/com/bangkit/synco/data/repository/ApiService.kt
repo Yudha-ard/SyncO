@@ -10,11 +10,15 @@ import com.bangkit.synco.data.model.LoginRequest
 import com.bangkit.synco.data.model.Register
 import com.bangkit.synco.data.model.RegistrationRequest
 import com.bangkit.synco.data.model.User
+import com.bangkit.synco.data.model.UserProfile
 import retrofit2.*
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
 
 interface ApiService {
     @Headers("Content-Type: application/json")
@@ -64,7 +68,6 @@ interface ApiService {
         @Path("userId") userId: String
     ): Call<User>
 
-
     @Headers("Content-Type: application/json")
     @PUT("api/users/update/me")
     fun updateProfile(
@@ -74,8 +77,14 @@ interface ApiService {
     ): Call<UserProfile>
 
     @Headers("Content-Type: application/json")
-    @GET("/article")
-    fun getArticles(): Call<ArticleModel>
+    @GET("/artikel")
+    fun getArticles(
+    ): Call<ArticleModel>
+    @GET("artikel")
+    @Headers("Content-Type: application/json")
+    fun getAllArticles(
+    ): Call<List<ArticleModel>>
+
 
     @Headers("Content-Type: application/json")
     @GET("/api/users/history/me")

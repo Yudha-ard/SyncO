@@ -19,7 +19,8 @@ class WebViewActivity : AppCompatActivity() {
         link = intent.getStringExtra("link").toString()
         with(binding) {
             webView.settings.javaScriptEnabled = true
-            webView.loadUrl(link.toString())
+            webView.loadUrl(link)
+            webView.clearCache(true)
             webView.webChromeClient = object : WebChromeClient() {
                 override fun onReceivedTitle(view: WebView, title: String) {
                     tvTitle.text = title

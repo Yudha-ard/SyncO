@@ -35,7 +35,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/synco" />
+        app:layout_constraintTop_toBottomOf="@+id/synco"
+        android:textAlignment="center"/>
 
     <ImageView
         android:id="@+id/synco"
@@ -50,23 +51,10 @@
 
 
     <TextView
-        android:id="@+id/tv_halo"
-        android:layout_width="194dp"
-        android:layout_height="31dp"
-        android:layout_marginTop="12dp"
-        android:text="Hello"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.161"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/synco" />
-
-    <TextView
         android:id="@+id/textViewCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="7dp"
         android:lineSpacingExtra="5dp"
         android:text="@string/home"
         android:textColor="@color/blue"
@@ -75,18 +63,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.212"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_halo" />
+        app:layout_constraintTop_toBottomOf="@+id/synco" />
 
     <Button
         android:id="@+id/buttonStart"
-        android:layout_width="180dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="160dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="13dp"
         android:background="@drawable/rounded_button"
         android:gravity="center"
         android:text="Start assessment"
         android:textColor="@color/white"
-        android:textSize="14sp"
+        android:textSize="13sp"
         app:backgroundTint="@color/blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.147"
@@ -97,7 +85,8 @@
         android:id="@+id/article"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
         android:text="Today's Article"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -105,6 +94,18 @@
         app:layout_constraintHorizontal_bias="0.111"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonStart" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="341dp"
+        android:layout_height="262dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.465"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/article"
+        app:layout_constraintVertical_bias="0.076" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

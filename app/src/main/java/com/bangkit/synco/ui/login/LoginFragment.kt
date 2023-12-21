@@ -65,13 +65,15 @@ class LoginFragment : Fragment() {
                 Log.d("LoginFragment", "lastName: ${result.loginResult.lastName}")
                 val currentUser = User(
                     result.loginResult.userId,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                     result.loginResult.token,
-                    true
+                    result.loginResult.firstName,
+                    result.loginResult.lastName,
+                    result.loginResult.dob,
+                    result.loginResult.height,
+                    result.loginResult.weight,
+                    result.loginResult.token,
+                    true,
+                    result.loginResult.age,
+                    result.loginResult.email,
                 )
 
                 Log.d("LoginFragment", "doLogin: $currentUser")

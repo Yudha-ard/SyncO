@@ -9,8 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.synco.UserPreferences
-import com.bangkit.synco.data.model.User
+import com.bangkit.synco.data.model.ArticleModel
 import com.bangkit.synco.data.repository.ApiConfig
 import com.bangkit.synco.databinding.FragmentHomeBinding
 import com.bangkit.synco.ui.assesment.AssessmentActivity
@@ -19,13 +21,16 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class HomeFragment : Fragment() {
     private var binding: FragmentHomeBinding? = null
     private lateinit var usrPref: UserPreferences
+    private lateinit var itemArticleAdapter: ItemArticleAdapter
 
     private val _message = MutableLiveData<String>()
     val message: LiveData<String> = _message
+
+    private val _articles = MutableLiveData<List<ArticleModel>>() // Use List<ArticleModel>
+    val articles: LiveData<List<ArticleModel>> = _articles
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,25 +39,25 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         usrPref = UserPreferences(requireContext())
 
-        Log.d("homeFragment", usrPref.getFirstName())
+        itemArticleAdapter = ItemArticleAdapter(emptyList()) // Initialize with an empty list
 
-        val firstName = usrPref.getFirstName()
-        val lastName = usrPref.getLastName()
-        if ((firstName != "" || firstName != null) && (lastName != "" || lastName != null)) {
-            Log.d("homeFragment", "harusnya gak null$firstName//$lastName//")
-            binding?.tvHalo?.text = "Hello $firstName $lastName"
-        } else {
-            fetchUserData()
-            val firstName = usrPref.getFirstName()
-            val lastName = usrPref.getLastName()
-            if (firstName != null){
-                binding?.tvHalo?.text = "Hello"
-            }
-            binding?.tvHalo?.text = "Hello, $firstName $lastName"
-        }
+
+        loadArticles()
         binding?.buttonStart?.setOnClickListener {
             val intent = Intent(activity, AssessmentActivity::class.java)
             startActivity(intent)
+        }
+
+        _articles.observe(viewLifecycleOwner, Observer { articles ->
+            itemArticleAdapter.updateArticles(articles)
+        })
+
+        loadArticles()
+        binding?.recyclerView?.apply {
+
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = itemArticleAdapter
+            Log.d("homeFragment", "masuk")
         }
 
         return binding?.root
@@ -63,31 +68,29 @@ class HomeFragment : Fragment() {
         binding = null
     }
 
-    private fun fetchUserData() {
-        val authToken = "${usrPref.getLoginData().token}"
-        if (authToken != null) {
-            val apiService = ApiConfig.getApiService()
-            apiService.getDataUser("Bearer $authToken").enqueue(object : Callback<User> {
-                override fun onResponse(call: Call<User>, response: Response<User>) {
-                    if (response.isSuccessful) {
-                        val user = response.body()
-                        if (user != null) {
-                            val firstName = user.firstName ?: ""
-                            val lastName = user.lastName ?: ""
-                            usrPref.updateUsername(firstName, lastName)
-                            _message.value = "update name: ${response.body()}"
-                            Log.d("homeFragment", "Response Body: ${Gson().toJson(response.body())}")
-
-                        }
-                    } else {
-                        _message.value = "updatefailed: ${response.message()}"
-                    }
+    private fun loadArticles() {
+        Log.d("homeFragment", "masuk loadArticle ")
+        ApiConfig.getApiService().getAllArticles().enqueue(object : Callback<List<ArticleModel>> {
+            override fun onResponse(call: Call<List<ArticleModel>>, response: Response<List<ArticleModel>>) {
+                val statusCode = response.code() // Get the HTTP status code
+                val responseBody = response.body()?.toString() ?: "null"
+                Log.d("homeFragment", "Response from server: $statusCode $responseBody")
+                if (response.isSuccessful && response.body() != null) {
+                    val articleList = response.body()
+                    _articles.postValue(articleList)
+                    _message.value = "Articles loaded successfully"
+                    Log.d("homeFragment", "Successful article response: ${Gson().toJson(response.body())}")
+                } else {
+                    _message.value = "Failed to get articles. Status Code: $statusCode"
+                    Log.d("homeFragment", "Failed article response: ${Gson().toJson(response.body())}")
                 }
+            }
 
-                override fun onFailure(call: Call<User>, t: Throwable) {
-                }
-            })
-        } else {
-        }
+            override fun onFailure(call: Call<List<ArticleModel>>, t: Throwable) {
+                _message.value = "Error getting articles: ${t.localizedMessage}"
+            }
+
+        })
     }
+
 }

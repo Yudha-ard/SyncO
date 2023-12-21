@@ -70,6 +70,7 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:4.9.1")
 
     implementation ("io.github.shashank02051997:FancyToast:2.0.2")
+    kapt ("com.github.bumptech.glide:compiler:4.11.0")
     implementation ("org.mindrot:jbcrypt:0.4")
     implementation ("org.springframework.security:spring-security-crypto:5.7.2")
     implementation ("commons-logging:commons-logging-api:1.1")

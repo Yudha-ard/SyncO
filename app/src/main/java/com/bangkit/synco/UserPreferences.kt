@@ -71,7 +71,7 @@ class UserPreferences(context: Context) {
             putBoolean(STATE_KEY, false)
             apply()
         }
-        _usrSessionFlow.value = User("","", "", null,0,0, "",false)
+        _usrSessionFlow.value = User("","", "", null,0,0, "",false, null, null)
     }
 
     fun getLoginData(): User {
@@ -93,7 +93,9 @@ class UserPreferences(context: Context) {
             0,
             0,
             pref.getString(TOKEN_KEY, "") ?: "",
-            pref.getBoolean(STATE_KEY, false)
+            pref.getBoolean(STATE_KEY, false),
+            null,
+            null,
         )
     }
 
