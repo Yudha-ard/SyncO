@@ -1,60 +1,94 @@
 package com.bangkit.synco.ui.article
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bangkit.synco.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bangkit.synco.MainActivity
+import com.bangkit.synco.UserPreferences
+import com.bangkit.synco.adapter.ArticleAdapter
+import com.bangkit.synco.data.model.ArticleModel
+import com.bangkit.synco.databinding.FragmentArticleBinding
+import com.bangkit.synco.ui.webview.WebViewActivity
+import com.shashank.sony.fancytoastlib.FancyToast
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ArticleFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ArticleFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var articleFragmentBinding: FragmentArticleBinding? = null
+    private lateinit var viewModel : ArticleViewModel
+    private lateinit var articleAdapter: ArticleAdapter
+    private lateinit var userPref: UserPreferences
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        articleFragmentBinding = FragmentArticleBinding.inflate(inflater, container, false)
+        initVM()
+        userPref = UserPreferences(requireContext())
+        return articleFragmentBinding!!.root
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).supportActionBar?.hide()
+        initView()
+    }
+
+    private fun initView() {
+        articleFragmentBinding?.apply {
+            doArticle()
+        }
+    }
+    private fun doArticle() {
+        val page = 1
+        viewModel.apply {
+            doArticle(page)
+            showLoading(true)
+            articles.observe(viewLifecycleOwner) { result ->
+                Log.d("LoginFragment", "Result is not null: $result")
+                result?.let { articles ->
+                    val layoutManager = LinearLayoutManager(requireContext())
+                    articleFragmentBinding?.rvArticle?.layoutManager = layoutManager
+                    val itemDecoration = DividerItemDecoration(requireContext(), layoutManager.orientation)
+                    articleFragmentBinding?.rvArticle?.addItemDecoration(itemDecoration)
+                    articleAdapter = ArticleAdapter(articles)
+                    articleFragmentBinding?.rvArticle?.adapter = articleAdapter
+                    articleAdapter.notifyDataSetChanged()
+                    //listener
+                    articleAdapter.setOnItemClickListener(object : ArticleAdapter.OnItemClickListener {
+                        override fun onItemClick(item: ArticleModel) {
+                            val intent = Intent(requireActivity(), WebViewActivity::class.java)
+                            intent.putExtra("link",item.link)
+                            startActivity(intent)
+                        }
+
+                    })
+                    showLoading(false)
+                }
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_article, container, false)
+    private fun initVM() {
+        viewModel = ViewModelProvider(requireActivity())[ArticleViewModel::class.java]
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ArticleFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ArticleFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun showLoading(isLoading: Boolean) {
+        articleFragmentBinding?.loading?.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun showMessage(message: String) {
+        FancyToast.makeText(requireContext(), message, FancyToast.LENGTH_SHORT, FancyToast.INFO, false).show()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        articleFragmentBinding = null
     }
 }

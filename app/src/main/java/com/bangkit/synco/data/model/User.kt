@@ -26,5 +26,10 @@ data class User(
     val token: String,
 
     @field:SerializedName("isLogin")
-    val isLogin: Boolean
+    val isLogin: Boolean,
+
+    @field:SerializedName("age")
+    val age: Int?,
+    @field:SerializedName("email")
+    val email: String?,
 )

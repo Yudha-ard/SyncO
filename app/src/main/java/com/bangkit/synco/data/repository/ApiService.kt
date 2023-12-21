@@ -1,7 +1,9 @@
 package com.bangkit.synco.data.repository
 
+import com.bangkit.synco.data.model.ArticleModel
 import com.bangkit.synco.data.model.Assesment
 import com.bangkit.synco.data.model.AssesmentRequest
+import com.bangkit.synco.data.model.History
 import retrofit2.Call
 import com.bangkit.synco.data.model.Login
 import com.bangkit.synco.data.model.LoginRequest
@@ -10,8 +12,6 @@ import com.bangkit.synco.data.model.RegistrationRequest
 import com.bangkit.synco.data.model.User
 import retrofit2.*
 import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -36,6 +36,50 @@ interface ApiService {
     fun getDataUser(
         @Header("Authorization") auth: String,
     ): Call<User>
+
+    @Headers("Content-Type: application/json")
+    @GET("/api/api/users/me")
+    fun getProfile(
+        @Header("Authorization") authorization: String,
+    ): Call<UserProfile>
+
+    @Headers("Content-Type: application/json")
+    @GET("/api/users/age/{userId}")
+    fun getAge(
+        @Header("Authorization") authorization: String,
+        @Path("userId") userId: String
+    ): Call<User>
+
+    @Headers("Content-Type: application/json")
+    @GET("/api/users/height/{userId}")
+    fun getHeight(
+        @Header("Authorization") authorization: String,
+        @Path("userId") userId: String
+    ): Call<User>
+
+    @Headers("Content-Type: application/json")
+    @GET("/api/users/weight/{userId}")
+    fun getWeight(
+        @Header("Authorization") authorization: String,
+        @Path("userId") userId: String
+    ): Call<User>
+
+
+    @Headers("Content-Type: application/json")
+    @PUT("api/users/update/me")
+    fun updateProfile(
+        @Header("Authorization") authorization: String,
+        @Path("userId") userId: String,
+        @Body user: User
+    ): Call<UserProfile>
+
+    @Headers("Content-Type: application/json")
+    @GET("/article")
+    fun getArticles(): Call<ArticleModel>
+
+    @Headers("Content-Type: application/json")
+    @GET("/api/users/history/me")
+    fun getHistory(@Header("Authorization") authorization: String): Call<History>
 
 
 }

@@ -10,15 +10,16 @@ import com.bangkit.synco.databinding.ActivityWebViewBinding
 class WebViewActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWebViewBinding
+    private var link = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWebViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        link = intent.getStringExtra("link").toString()
         with(binding) {
             webView.settings.javaScriptEnabled = true
-            webView.loadUrl("https://www.halodoc.com/kesehatan/asma")
+            webView.loadUrl(link.toString())
             webView.webChromeClient = object : WebChromeClient() {
                 override fun onReceivedTitle(view: WebView, title: String) {
                     tvTitle.text = title

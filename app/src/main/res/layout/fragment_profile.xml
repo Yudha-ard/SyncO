@@ -6,8 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:layout_margin="16dp"
-    tools:context=".ui.profile.ProfileFragment"
-    >
+    tools:context=".ui.profile.ProfileFragment">
 
     <TextView
         android:id="@+id/tv_title"
@@ -19,6 +18,21 @@
         android:textStyle="bold"
         android:textAlignment="center"
         app:layout_constraintTop_toTopOf="parent"/>
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="64dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tv_title"
+        app:layout_constraintStart_toStartOf="@+id/tv_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_profile"
@@ -188,7 +202,7 @@
             android:layout_height="1dp"
             android:background="@color/primary_blue"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_logout"
             android:layout_marginTop="16dp"
             android:layout_width="match_parent"
