@@ -16,10 +16,13 @@ Here is our repository for Bangkit 2023 Capstone project. Our team consist of 3 
 | Putri Dia Lestari  | C296BSX3926 | Cloud Computing | [Linkedin](https://www.linkedin.com/in/putri-dia-7277441a3/) or [Github](https://github.com/putridia) |
 | Shinta Amalia Azhara | C296BSX4151 | Cloud Computing | [Linkedin](https://www.linkedin.com/in/shintaamaliaazhara/) or [Github](https://github.com/ShintaAmaliaA) |
 | Adibah Dewi Satriani | A296BSX2780 | Mobile Development | [Linkedin](https://www.linkedin.com/in/adibah-satriani-435948251/) or [Github](https://github.com/adibahsatriani) |
-| Raissa Naila Thahira | A010BSX2409 | Mobile Development | [Linkedin]() or [Github](https://github.com/raissathahira) |
+| Raissa Naila Thahira | A010BSX2409 | Mobile Development | [Linkedin](https://www.linkedin.com/in/raissathahira/) or [Github](https://github.com/raissathahira) |
 
 ## About SyncO
   A user-friendly health app designed to bridge healthcare gaps, particularly in remote areas, by leveraging smart technology. The app streamlines health management by providing easy access to medical guidance and predicting potential health issues. It aims to address disparities in healthcare access, offering support where traditional services are scarce. Through intuitive features, it empowers users to comprehend and anticipate their health concerns, promoting proactive wellness strategies. The ultimate goal is to democratize healthcare guidance, ensuring accessibility for all.
+
+## Documentation
+![Screenshot (496)](https://drive.google.com/file/d/1Ks5NpE6dY1Tnd7n-JuZjxW-xTwW2kC6x/view?usp=sharing)
 
 ## System Architecture
 ![Screenshot (495)](https://github.com/Yudha-ard/SyncO/assets/31431688/ce35fab9-b2bb-4827-98b6-e078362d4599)
@@ -42,8 +45,8 @@ Dataset Links of This Project : [Dataset](https://github.com/Yudha-ard/SyncO/tre
 ## UI/UX
 Design Implementation : 
 
-- Link Figma : [Figma](https://www.figma.com/proto/bmkwkgqGCDTl7ddHKnA5ZA/SyncO?type=design&node-id=82-4&t=Nz4m0ebcrnlGzuhf-0&scaling=scale-down&page-id=0%3A1&starting-point-node-id=82%3A4&show-proto-sidebar=1)
-- Link Prototype Design : [Prototype](https://www.figma.com/file/bmkwkgqGCDTl7ddHKnA5ZA/SyncO?type=design&node-id=82%3A4&mode=design&t=Nz4m0ebcrnlGzuhf-1)
+- Link Figma : [Figma](https://www.figma.com/file/atRHpRwna60sz80mxp1IV4/Synco?type=design&node-id=0%3A1&mode=design&t=y4NcUWeaIgQqwFPs-1)
+- Link Prototype Design : [Prototype]()
 
 ## Deployment Link APK Synco
 Download Link APK syncO : [syncOAPK (Google Drive)]()
