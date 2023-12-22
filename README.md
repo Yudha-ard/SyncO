@@ -49,4 +49,4 @@ Design Implementation :
 - Link Prototype Design : [Prototype](https://www.figma.com/proto/atRHpRwna60sz80mxp1IV4/Synco-Fix?type=design&node-id=1-27&t=yJVfGVzoZzowgZi4-1&scaling=min-zoom&page-id=0%3A1&starting-point-node-id=1%3A27&mode=design)
 
 ## Deployment Link APK Synco
-Download Link APK syncO : [syncOAPK (Google Drive)]()
+Download Link APK syncO : [syncOAPK (Google Drive)](https://drive.google.com/file/d/1UKLGFiLw7OIpJL4J6xmCGDw1lDzQAJiV/view?usp=drive_link)
