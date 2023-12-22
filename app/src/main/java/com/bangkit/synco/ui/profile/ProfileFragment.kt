@@ -1,5 +1,6 @@
 package com.bangkit.synco.ui.profile
 
+import com.bangkit.synco.ui.history.HistoryActivity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +13,6 @@ import com.bangkit.synco.MainActivity
 import com.bangkit.synco.UserPreferences
 import com.bangkit.synco.databinding.FragmentProfileBinding
 import com.bangkit.synco.ui.basicinfo.BasicInfoActivity
-import com.bangkit.synco.ui.login.RegisterFragment
 import com.shashank.sony.fancytoastlib.FancyToast
 
 
@@ -44,63 +44,58 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         profileFragmentBinding?.apply {
-
             btnLogout?.setOnClickListener {
                 Log.d("LogoutFragment", "Logout button clicked")
                 (requireActivity() as? MainActivity)?.doLogout()
             }
             doGetProfile()
             btnBasicInfo.setOnClickListener {
-                startActivity(Intent(requireContext(), BasicInfoActivity::class.java))
-            }
-            btnAssessment.setOnClickListener {
-                (activity as MainActivity).moveToFragment(RegisterFragment())
-            }
-
-        }
-    }
-
-
-    private fun initView() {
-        profileFragmentBinding?.apply {
-            doGetProfile()
-            btnBasicInfo.setOnClickListener {
                 //intent ke basicInfoActivity
                 startActivity(Intent(requireContext(), BasicInfoActivity::class.java))
             }
             btnAssessment.setOnClickListener {
-                (activity as MainActivity).moveToFragment(RegisterFragment())
+
+                startActivity(Intent(requireContext(), HistoryActivity::class.java))
             }
         }
     }
+
     private fun doGetProfile() {
-        val userId = userPref.getLoginData().userId.toString()
-        val token = userPref.getLoginData().token
+        val userId = userPref.getLoginData().userId
+        val token = userPref.getToken()
+        Log.d("ini Token", "$token")
+        userPref.setToken(token)
         viewModel.apply {
-            showLoading(true)
             doGetProfile(token)
             usrInfo.observe(viewLifecycleOwner) { result ->
-                Log.d("UserInfo", "Result is not null: $result")
                 profileFragmentBinding?.apply {
-                    tvName.text = result.user.firstName
-                    tvEmail.text = result.user.email
-                    tvAge.text = result.user.age.toString()
-                    tvHeight.text = result.user.height.toString()
-                    tvWeight.text = result.user.weight.toString()
+                    val firstName = result.user.firstName
+                    val lastName = result.user.lastName
+                    val Email = result.user.email
+                    tvName.text =  "$firstName $lastName"
 
+
+                    tvEmail.text =  "$Email"
+                    if(result.user.age != null){
+                        tvAge.text = result.user.age.toString()
+                    }else{
+                        tvAge.text = "--"
+                    }
+                    if(result.user.height != null){
+                        tvHeight.text = result.user.height.toString()
+                    }else{
+                        tvHeight.text = "--"
+                    }
+                    if(result.user.weight != null){
+                        tvWeight.text = result.user.weight.toString()
+                    }else{
+                        tvWeight.text = "--"
+                    }
                 }
-                _name=result.user.firstName.toString()
-                _email=result.user.email.toString()
                 _birth=result.user.dob.toString()
                 _age=result.user.age.toString()
                 _height=result.user.height.toString()
                 _weight=result.user.weight.toString()
-            }
-            message.observe(viewLifecycleOwner) { message ->
-                Log.d("UserInfo", "Message is not null: $message")
-                profileFragmentBinding?.apply {
-                    tvName.text = message
-                }
             }
             showLoading(false)
         }
@@ -108,7 +103,6 @@ class ProfileFragment : Fragment() {
 
     private fun initVM() {
         viewModel = ViewModelProvider(requireActivity())[ProfileViewModel::class.java]
-        viewModel.isLoading.observe(viewLifecycleOwner) { showLoading(it) }
         viewModel.message.observe(viewLifecycleOwner) { showMessage(it) }
     }
 

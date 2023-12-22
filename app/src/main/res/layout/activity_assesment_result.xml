@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_below="@id/toolbar"
     android:id="@+id/fragmentContainer">
 
     <RelativeLayout
@@ -16,8 +15,6 @@
         android:focusableInTouchMode="true"
         tools:layout_editor_absoluteX="37dp"
         tools:layout_editor_absoluteY="63dp">
-
-
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -57,13 +54,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="50dp"
             android:layout_marginEnd="30dp"
             app:cardBackgroundColor="@color/yellow"
             app:cardCornerRadius="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/divider">
+            android:layout_below="@id/divider">
 
-            <!-- Use a horizontal LinearLayout to arrange image and text side by side -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -100,12 +96,25 @@
             android:layout_below="@+id/cardViewContainer"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="60dp"
-            android:layout_marginTop="21dp"
+            android:layout_marginTop="30dp"
             android:text="You may have Cervical spondylosis"
             android:textColor="@color/blue"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/cardViewContainer"/>
+            />
+
+        <TextView
+            android:id="@+id/info_diagnose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/diagnose"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="9dp"
+            android:lineSpacingExtra="5dp"
+            android:text="@string/info_diagnose"
+            android:textColor="@color/blue"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/text"
@@ -113,34 +122,20 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="60dp"
-            android:layout_marginTop="184dp"
+            android:layout_marginTop="30dp"
             android:text="Take following measures :"
             android:textColor="@color/blue"
             android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@+id/info_diagnose"/>
-
-        <TextView
-            android:id="@+id/info_diagnose"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="62dp"
-            android:lineSpacingExtra="5dp"
-            android:text="@string/info_diagnose"
-            app:layout_constraintTop_toBottomOf="@+id/diagnose"
-            android:textColor="@color/blue"
-            android:textSize="14sp" />
+            android:layout_below="@id/info_diagnose"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="166dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="30dp"
-            app:layout_constraintTop_toBottomOf="@+id/text"/>
+            android:layout_below="@id/text"/>
 
 
     </RelativeLayout>

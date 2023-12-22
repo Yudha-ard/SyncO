@@ -49,7 +49,26 @@ class UserPreferences(context: Context) {
         _usrSessionFlow.value = updatedUser
     }
 
+    fun setFirstName(firstName: String) {
+        with(pref.edit()) {
+            putString(FIRST_NAME_KEY, firstName)
+            apply()
+        }
+    }
 
+    fun setLastName(lastName: String) {
+        with(pref.edit()) {
+            putString(FIRST_NAME_KEY, lastName)
+            apply()
+        }
+    }
+
+    fun setToken(token: String) {
+        with(pref.edit()) {
+            putString(FIRST_NAME_KEY, token)
+            apply()
+        }
+    }
 
     fun getUserEmail(): String {
         return pref.getString(USER_EMAIL_KEY, "") ?: ""
@@ -60,6 +79,9 @@ class UserPreferences(context: Context) {
     }
     fun getLastName(): String {
         return pref.getString(LAST_NAME_KEY, "") ?: ""
+    }
+    fun getToken(): String {
+        return pref.getString(TOKEN_KEY, "") ?: ""
     }
 
     fun logout() {

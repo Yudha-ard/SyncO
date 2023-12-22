@@ -43,8 +43,8 @@ class BasicInfoActivity : AppCompatActivity() {
                     var dob = convertStringToDate(binding.edtDob.text.toString())
                     var newuser = User(
                         userPref.getLoginData().userId,
-                        binding.edtFirstName.text.toString(),
-                        binding.edtLastName.text.toString(),
+                        userPref.getLoginData().firstName,
+                        userPref.getLoginData().lastName,
                         dob,
                         binding.edtHeight.text.toString().toInt(),
                         binding.edtWeight.text.toString().toInt(),
@@ -74,28 +74,11 @@ class BasicInfoActivity : AppCompatActivity() {
         token = userPref.getLoginData().token
     }
     private fun validateInput():Boolean{
-        //cek inputan kosong
-        if (binding.edtFirstName.text.toString().isEmpty()){
-            binding.edtFirstName.error = "First Name tidak boleh kosong"
-            binding.edtFirstName.requestFocus()
-            return false
-        }
-        if (binding.edtLastName.text.toString().isEmpty()){
-            binding.edtLastName.error = "Last Name tidak boleh kosong"
-            binding.edtLastName.requestFocus()
-            return false
-        }
-        if (binding.edtEmail.text.toString().isEmpty()){
-            binding.edtEmail.error = "Email tidak boleh kosong"
-            binding.edtEmail.requestFocus()
-            return false
-        }
         if (binding.edtDob.text.toString().isEmpty()){
             binding.edtDob.error = "Date of Birth tidak boleh kosong"
             binding.edtDob.requestFocus()
             return false
         }
-        //height dan width
         if (binding.edtHeight.text.toString().isEmpty()){
             binding.edtHeight.error = "Height tidak boleh kosong"
             binding.edtHeight.requestFocus()

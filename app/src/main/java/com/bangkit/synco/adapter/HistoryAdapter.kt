@@ -1,6 +1,8 @@
 package com.bangkit.synco.adapter
 
+import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
@@ -10,43 +12,28 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.synco.data.model.HistoryItem
 import com.bangkit.synco.databinding.ItemHistoryBinding
 import com.bangkit.synco.helper.formatDate
+import com.bangkit.synco.ui.webview.WebViewActivity
+import com.bumptech.glide.Glide
 
-class HistoryAdapter(history: List<HistoryItem>) :ListAdapter<HistoryItem, HistoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class HistoryAdapter(history: List<HistoryItem>) : ListAdapter<HistoryItem, HistoryAdapter.ViewHolder>(DIFF_CALLBACK) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-
-        val binding = ItemHistoryBinding.inflate(LayoutInflater.from(parent.context),parent, false)
-        return MyViewHolder(binding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val history = getItem(position)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            holder.bind(history)
-        }
-
-        holder.itemView.setOnClickListener {
-            listener?.onItemClick(history)
-        }
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val historyItem = getItem(position)
+        holder.bind(historyItem)
     }
 
-    class MyViewHolder(val binding: ItemHistoryBinding) : RecyclerView.ViewHolder(binding.root) {
-        @RequiresApi(Build.VERSION_CODES.O)
-        fun bind(history:HistoryItem) {
-            val tanggal = formatDate(history.history_tanggal)
-            binding.tvDate.text = history.history_tanggal
-            binding.tvSymptoms.text = history.nama_penyakit
+    inner class ViewHolder(private val binding: ItemHistoryBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(historyItem: HistoryItem) {
+            binding.tvDate.text = historyItem.history_tanggal
+            binding.tvSymptoms.text = historyItem.nama_penyakit
         }
     }
 
-    interface OnItemClickListener {
-        fun onItemClick(item: HistoryItem)
-    }
-    private var listener: OnItemClickListener? = null
-
-    fun setOnItemClickListener(listener : OnItemClickListener) {
-        this.listener = listener
-    }
 
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<HistoryItem>() {

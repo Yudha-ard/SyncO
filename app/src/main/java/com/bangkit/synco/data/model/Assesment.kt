@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Assesment(
-    @field:SerializedName("message")
+
     val message: String,
 
     @SerializedName("nama_penyakit")

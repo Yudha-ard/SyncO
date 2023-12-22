@@ -33,8 +33,6 @@ class ArticleAdapter(private var articles: List<ArticleModel>) : ListAdapter<Art
 
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context
-            val article = articles[position]
-
             val intent = Intent(context, WebViewActivity::class.java)
             intent.putExtra("link", article.link)
             Log.d("webview", "ini link: ${article.link}")
@@ -67,4 +65,3 @@ class ArticleAdapter(private var articles: List<ArticleModel>) : ListAdapter<Art
         }
     }
 }
-

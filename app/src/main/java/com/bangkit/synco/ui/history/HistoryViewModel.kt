@@ -29,15 +29,15 @@ class HistoryViewModel : ViewModel() {
                     if (response.isSuccessful && response.body() != null) {
                         val apiResponse = response.body()
                         _history.value = apiResponse?.history
-                        _message.value = "Successful for article"
+                        _message.value = "Successful history"
                     } else {
-                        _message.value = "Failed to get articles: ${response.errorBody()?.string()}"
+                        _message.value = "Failed to get history: ${response.errorBody()?.string()}"
                     }
                     _isLoading.value = true
                 }
 
                 override fun onFailure(call: Call<History>, t: Throwable) {
-                    _message.value = "Error getting articles: ${t.localizedMessage}"
+                    _message.value = "Error getting history: ${t.localizedMessage}"
                     _isLoading.value = true
                 }
             })

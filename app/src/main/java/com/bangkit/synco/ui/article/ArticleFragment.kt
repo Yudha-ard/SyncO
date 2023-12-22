@@ -54,9 +54,6 @@ class ArticleFragment : Fragment() {
             }
         }
 
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            showLoading(isLoading)
-        }
 
         viewModel.message.observe(viewLifecycleOwner) { message ->
             showMessage(message)
