@@ -43,9 +43,20 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        profileFragmentBinding?.btnLogout?.setOnClickListener {
-            Log.d("LogoutFragment", "Logout button clicked")
-            (requireActivity() as? MainActivity)?.doLogout()
+        profileFragmentBinding?.apply {
+
+            btnLogout?.setOnClickListener {
+                Log.d("LogoutFragment", "Logout button clicked")
+                (requireActivity() as? MainActivity)?.doLogout()
+            }
+            doGetProfile()
+            btnBasicInfo.setOnClickListener {
+                startActivity(Intent(requireContext(), BasicInfoActivity::class.java))
+            }
+            btnAssessment.setOnClickListener {
+                (activity as MainActivity).moveToFragment(RegisterFragment())
+            }
+
         }
     }
 

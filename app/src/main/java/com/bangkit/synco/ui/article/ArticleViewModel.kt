@@ -11,8 +11,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ArticleViewModel : ViewModel() {
-    private val _articles = MutableLiveData<ArticleModel>()
-    val articles: LiveData<ArticleModel> = _articles
+    private val _articles = MutableLiveData<List<ArticleModel>>()
+    val articles: LiveData<List<ArticleModel>> = _articles
 
     private val _message = MutableLiveData<String>()
     val message: LiveData<String> = _message
@@ -22,12 +22,16 @@ class ArticleViewModel : ViewModel() {
 
     fun doArticle(page: Int) {
         _isLoading.value = false
-        ApiConfig.getApiService().getArticles()
-            .enqueue(object : Callback<ArticleModel> {
-                override fun onResponse(call: Call<ArticleModel>, response: Response<ArticleModel>) {
+        ApiConfig.getApiService().getAllArticles()
+            .enqueue(object : Callback<List<ArticleModel>> {
+                override fun onResponse(
+                    call: Call<List<ArticleModel>>,
+                    response: Response<List<ArticleModel>>
+                ) {
                     if (response.isSuccessful && response.body() != null) {
                         val apiResponse = response.body()
-                        _articles.value = apiResponse?.let { it }!!
+                        // Assuming _articles is MutableLiveData<List<ArticleModel>>
+                        _articles.value = apiResponse ?: emptyList()
                         _message.value = "Successful for article"
                     } else {
                         _message.value = "Failed to get articles: ${response.errorBody()?.string()}"
@@ -35,15 +39,16 @@ class ArticleViewModel : ViewModel() {
                     _isLoading.value = true
                 }
 
-                override fun onFailure(call: Call<ArticleModel>, t: Throwable) {
+                override fun onFailure(call: Call<List<ArticleModel>>, t: Throwable) {
                     _message.value = "Error getting articles: ${t.localizedMessage}"
                     _isLoading.value = true
                 }
             })
     }
-}
 
-data class ErrorResponse(
-    val error: Boolean,
-    val message: String
-)
+
+    data class ErrorResponse(
+        val error: Boolean,
+        val message: String
+    )
+}

@@ -20,63 +20,57 @@ import com.shashank.sony.fancytoastlib.FancyToast
 
 class ArticleFragment : Fragment() {
     private var articleFragmentBinding: FragmentArticleBinding? = null
-    private lateinit var viewModel : ArticleViewModel
+    private lateinit var viewModel: ArticleViewModel
     private lateinit var articleAdapter: ArticleAdapter
     private lateinit var userPref: UserPreferences
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         articleFragmentBinding = FragmentArticleBinding.inflate(inflater, container, false)
-        initVM()
         userPref = UserPreferences(requireContext())
         return articleFragmentBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).supportActionBar?.hide()
-        initView()
-    }
 
-    private fun initView() {
-        articleFragmentBinding?.apply {
+        // Hide the action bar
+        (activity as MainActivity).supportActionBar?.hide()
+
+        // Initialize ViewModel
+        viewModel = ViewModelProvider(this).get(ArticleViewModel::class.java)
+
+        val layoutManager = LinearLayoutManager(requireContext())
+        articleAdapter = ArticleAdapter(emptyList())
+        articleFragmentBinding?.rvArticle?.layoutManager = layoutManager
+        articleFragmentBinding?.rvArticle?.adapter = articleAdapter
+
+        viewModel.articles.observe(viewLifecycleOwner) { articles ->
+            articles?.let {
+                articleAdapter.submitList(articles)
+            }
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            showLoading(isLoading)
+        }
+
+        viewModel.message.observe(viewLifecycleOwner) { message ->
+            showMessage(message)
+        }
+
+        // Load articles when the fragment is first created
+        if (viewModel.articles.value == null) {
             doArticle()
         }
     }
+
     private fun doArticle() {
         val page = 1
-        viewModel.apply {
-            doArticle(page)
-            showLoading(true)
-            articles.observe(viewLifecycleOwner) { result ->
-                Log.d("LoginFragment", "Result is not null: $result")
-                result?.let { articles ->
-                    val layoutManager = LinearLayoutManager(requireContext())
-                    articleFragmentBinding?.rvArticle?.layoutManager = layoutManager
-                    val itemDecoration = DividerItemDecoration(requireContext(), layoutManager.orientation)
-                    articleFragmentBinding?.rvArticle?.addItemDecoration(itemDecoration)
-                    articleAdapter = ArticleAdapter(articles)
-                    articleFragmentBinding?.rvArticle?.adapter = articleAdapter
-                    articleAdapter.notifyDataSetChanged()
-                    //listener
-                    articleAdapter.setOnItemClickListener(object : ArticleAdapter.OnItemClickListener {
-                        override fun onItemClick(item: ArticleModel) {
-                            val intent = Intent(requireActivity(), WebViewActivity::class.java)
-                            intent.putExtra("link",item.link)
-                            startActivity(intent)
-                        }
-
-                    })
-                    showLoading(false)
-                }
-            }
-        }
-    }
-
-    private fun initVM() {
-        viewModel = ViewModelProvider(requireActivity())[ArticleViewModel::class.java]
+        viewModel.doArticle(page)
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -84,7 +78,7 @@ class ArticleFragment : Fragment() {
     }
 
     private fun showMessage(message: String) {
-        FancyToast.makeText(requireContext(), message, FancyToast.LENGTH_SHORT, FancyToast.INFO, false).show()
+        // Handle error messages here
     }
 
     override fun onDetach() {

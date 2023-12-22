@@ -42,34 +42,34 @@ interface ApiService {
     ): Call<User>
 
     @Headers("Content-Type: application/json")
-    @GET("/api/api/users/me")
+    @GET("users/me")
     fun getProfile(
         @Header("Authorization") authorization: String,
     ): Call<UserProfile>
 
     @Headers("Content-Type: application/json")
-    @GET("/api/users/age/{userId}")
+    @GET("user/age/{userId}")
     fun getAge(
         @Header("Authorization") authorization: String,
         @Path("userId") userId: String
     ): Call<User>
 
     @Headers("Content-Type: application/json")
-    @GET("/api/users/height/{userId}")
+    @GET("user/height/{userId}")
     fun getHeight(
         @Header("Authorization") authorization: String,
         @Path("userId") userId: String
     ): Call<User>
 
     @Headers("Content-Type: application/json")
-    @GET("/api/users/weight/{userId}")
+    @GET("user/weight/{userId}")
     fun getWeight(
         @Header("Authorization") authorization: String,
         @Path("userId") userId: String
     ): Call<User>
 
     @Headers("Content-Type: application/json")
-    @PUT("api/users/update/me")
+    @PUT("user/update/me")
     fun updateProfile(
         @Header("Authorization") authorization: String,
         @Path("userId") userId: String,
