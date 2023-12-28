@@ -24,10 +24,10 @@ Here is our repository for Bangkit 2023 Capstone project. Our team consist of 3 
 - API Documentation Endpoint  : [Documentation Link](https://www.postman.com/yudhaard28/workspace/synco-api/request/26319765-00aa80fc-b1c0-49df-a652-10a6f4f15c66)
 
 ## Online API
-###[Disease Predict API]
+[Disease Predict API]
 - [Predict API](http://yudhaard.pythonanywhere.com)
 
-###[SyncO API]
+[SyncO API]
 - [SyncO API](https://synco-dev-tbfuyp4usa-et.a.run.app)
 
 ## UI/UX
@@ -45,7 +45,7 @@ Here is our repository for Bangkit 2023 Capstone project. Our team consist of 3 
 - pyttsx3
 
 ## Run
-[python main.py or python3 main.py]
+- python main.py or python3 main.py
 
 
 
