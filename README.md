@@ -17,20 +17,28 @@ Here is our repository for Bangkit 2023 Capstone project. Our team consist of 3 
 
 ## Repositories
 
-Mobile Development : 
+Mobile Development : [Link](https://github.com/Yudha-ard/SyncO/tree/mobile-development)
 
-Clound Computing   : 
+Clound Computing   : [Link](https://github.com/Yudha-ard/SyncO/tree/cloud-computing)
 
-Machine Learning   : 
+Machine Learning   : [Link](https://github.com/Yudha-ard/SyncO/tree/machine-learning)
 
 ## API Documentation
-API Documentation Endpoint  :
+API Documentation Endpoint  : [Documentation Link](https://www.postman.com/yudhaard28/workspace/synco-api/request/26319765-00aa80fc-b1c0-49df-a652-10a6f4f15c66)
+
+## Online API
+
+(Disease Predict API)
+- [Predict API](http://yudhaard.pythonanywhere.com)
+
+(SyncO API)
+- [SyncO API](https://synco-dev-tbfuyp4usa-et.a.run.app)
 
 ## UI/UX
-Design Implementation : 
+Design Implementation : [Link](https://www.figma.com/file/bmkwkgqGCDTl7ddHKnA5ZA/SyncO)
 
 ## Deployment APK Synco
-Link
+[App Link](https://drive.google.com/file/d/1UKLGFiLw7OIpJL4J6xmCGDw1lDzQAJiV/view?usp=sharing)
 
 
 
@@ -45,3 +53,9 @@ Link
 ## Run
 
 (python main.py or python3 main.py)
+
+
+
+
+
+
